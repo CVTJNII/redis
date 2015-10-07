@@ -110,9 +110,12 @@ foreach diskless {no yes} {
     test_psync {no reconnection, just sync} 6 1000000 3600 0 {
     } $diskless 0
 
-    test_psync {ok psync} 6 1000000 3600 0 {
-        assert {[s -1 sync_partial_ok] > 0}
-    } $diskless 1
+# Disable brittle test
+# There are numerous reports of these tests failing, the best one for this appears to be
+# https://github.com/antirez/redis/issues/2715
+#    test_psync {ok psync} 6 1000000 3600 0 {
+#        assert {[s -1 sync_partial_ok] > 0}
+#    } $diskless 1
 
     test_psync {no backlog} 6 100 3600 0.5 {
         assert {[s -1 sync_partial_err] > 0}
